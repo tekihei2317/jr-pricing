@@ -22,16 +22,33 @@ class FareTest extends TestCase
         );
     }
 
-    public function test大人・新大阪・片道・ひかり・指定席の場合()
-    {
+    /**
+     * @dataProvider dataProvider_料金が正しく計算できること
+     */
+    public function test料金が正しく計算できること(
+        bool $isAdult,
+        string $destination,
+        bool $isOneWay,
+        bool $isHikari,
+        bool $isReservedSeat,
+        int $expected,
+    ) {
         $ticket = new Ticket(
-            isAdult: true,
-            destination: 'shinosaka',
-            isOneWay: true,
-            isHikari: true,
-            isReservedSeat: true
+            isAdult: $isAdult,
+            destination: $destination,
+            isOneWay: $isOneWay,
+            isHikari: $isHikari,
+            isReservedSeat: $isReservedSeat
         );
 
-        $this->assertEquals(14400, $this->fare->calculate($ticket));
+        $this->assertEquals($expected, $this->fare->calculate($ticket));
+    }
+
+    public function dataProvider_料金が正しく計算できること()
+    {
+        return [
+            '大人・新大阪・片道・ひかり・指定席の場合' => [true, 'shinosaka', true, true, true, 14400],
+            '子供・新大阪・片道・ひかり・指定席の場合' => [false, 'shinosaka', true, true, true, 7190],
+        ];
     }
 }

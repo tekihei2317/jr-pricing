@@ -13,12 +13,17 @@ final class BaseFare
     {
     }
 
-    public function calculate(Ticket $ticket)
+    public function calculate(Ticket $ticket): int
     {
-        if ($ticket->isAdult) {
-            return 8910;
-        } else {
-            return 0;
+        $fare = 8910;
+
+        if (!$ticket->isAdult) {
+            assert($fare % 10 === 0);
+
+            $fare = $fare / 2;
+            $fare -= $fare % 10;
         }
+
+        return $fare;
     }
 }
