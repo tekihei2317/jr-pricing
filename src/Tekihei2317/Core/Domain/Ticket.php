@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace Tekihei2317\Core\Domain;
 
+/**
+ * 乗車券
+ */
 final class Ticket
 {
     public function __construct(
-        private bool $isAdult,
-        private string $destination,
-        private bool $isOneWay,
-        private bool $isHikari,
-        private bool $isReservedSeat
+        public readonly bool $isAdult,
+        public readonly string $destination,
+        public readonly bool $isOneWay,
+        public readonly bool $isHikari,
+        public readonly bool $isReservedSeat
     ) {
     }
 }
