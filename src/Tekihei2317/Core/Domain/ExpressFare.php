@@ -15,21 +15,20 @@ final class ExpressFare
 
     public function calculate(Ticket $ticket): int
     {
-        $expressFare = $this->expressFareByDestination($ticket->destination);
+        $expressFare = $ticket->getExpressFare();
 
         if (!$ticket->isAdult) {
             assert($expressFare % 10 === 0);
-            // 半額(5円の端数は切り捨てる)
+
+            // 子供は半額(5円の端数は切り捨てる)
             $expressFare = $expressFare / 2;
             $expressFare -= $expressFare % 10;
         }
 
-        return $expressFare;
-    }
+        if (!$ticket->isOneWay) {
+            $expressFare *= 2;
+        }
 
-    private function expressFareByDestination(Destination $destination): int
-    {
-        if ($destination === Destination::Himeji) return 5920;
-        return 5490;
+        return $expressFare;
     }
 }

@@ -15,21 +15,26 @@ final class BaseFare
 
     public function calculate(Ticket $ticket): int
     {
-        $fare = $this->baseFareByDestination($ticket->destination);
+        $fare = $ticket->getBaseFare();
 
         if (!$ticket->isAdult) {
             assert($fare % 10 === 0);
 
+            // 子供は半額(5円の端数は切り捨て)
             $fare = $fare / 2;
             $fare -= $fare % 10;
         }
 
-        return $fare;
-    }
+        if (!$ticket->isOneWay) {
+            if ($ticket->isRoundTripDiscountTarget()) {
+                // 往復割引は1割引(10円未満は切り捨て)
+                $fare = (int)($fare * 0.9);
+                $fare = ((int)($fare / 10)) * 10;
+            }
 
-    private function baseFareByDestination(Destination $destination)
-    {
-        if ($destination === Destination::Himeji) return 10010;
-        return 8910;
+            $fare *= 2;
+        }
+
+        return $fare;
     }
 }
