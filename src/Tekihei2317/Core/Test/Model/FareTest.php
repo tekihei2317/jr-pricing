@@ -6,6 +6,7 @@ namespace Tekihei2317\Core\Test\Model;
 
 use PHPUnit\Framework\TestCase;
 use Tekihei2317\Core\Domain\BaseFare;
+use Tekihei2317\Core\Domain\Destination;
 use Tekihei2317\Core\Domain\ExpressFare;
 use Tekihei2317\Core\Domain\Fare;
 use Tekihei2317\Core\Domain\Ticket;
@@ -27,7 +28,7 @@ class FareTest extends TestCase
      */
     public function test料金が正しく計算できること(
         bool $isAdult,
-        string $destination,
+        Destination $destination,
         bool $isOneWay,
         bool $isHikari,
         bool $isReservedSeat,
@@ -47,8 +48,9 @@ class FareTest extends TestCase
     public function dataProvider_料金が正しく計算できること()
     {
         return [
-            '大人・新大阪・片道・ひかり・指定席の場合' => [true, 'shinosaka', true, true, true, 14400],
-            '子供・新大阪・片道・ひかり・指定席の場合' => [false, 'shinosaka', true, true, true, 7190],
+            '大人・新大阪・片道・ひかり・指定席の場合' => [true, Destination::Shinosaka, true, true, true, 14400],
+            '子供・新大阪・片道・ひかり・指定席の場合' => [false, Destination::Shinosaka, true, true, true, 7190],
+            '大人・姫路・片道・ひかり・指定席の場合' => [true, Destination::Himeji, true, true, true, 15930],
         ];
     }
 }

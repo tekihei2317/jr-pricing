@@ -15,7 +15,7 @@ final class BaseFare
 
     public function calculate(Ticket $ticket): int
     {
-        $fare = 8910;
+        $fare = $this->baseFareByDestination($ticket->destination);
 
         if (!$ticket->isAdult) {
             assert($fare % 10 === 0);
@@ -25,5 +25,11 @@ final class BaseFare
         }
 
         return $fare;
+    }
+
+    private function baseFareByDestination(Destination $destination)
+    {
+        if ($destination === Destination::Himeji) return 10010;
+        return 8910;
     }
 }

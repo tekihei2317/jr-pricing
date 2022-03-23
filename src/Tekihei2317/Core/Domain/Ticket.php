@@ -11,7 +11,7 @@ final class Ticket
 {
     public function __construct(
         public readonly bool $isAdult,
-        public readonly string $destination,
+        public readonly Destination $destination,
         public readonly bool $isOneWay,
         public readonly bool $isHikari,
         public readonly bool $isReservedSeat

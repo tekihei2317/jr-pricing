@@ -15,7 +15,7 @@ final class ExpressFare
 
     public function calculate(Ticket $ticket): int
     {
-        $expressFare = 5490;
+        $expressFare = $this->expressFareByDestination($ticket->destination);
 
         if (!$ticket->isAdult) {
             assert($expressFare % 10 === 0);
@@ -25,5 +25,11 @@ final class ExpressFare
         }
 
         return $expressFare;
+    }
+
+    private function expressFareByDestination(Destination $destination): int
+    {
+        if ($destination === Destination::Himeji) return 5920;
+        return 5490;
     }
 }
