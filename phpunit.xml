@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit colors="true">
+  <testsuite name="Tests">
+    <directory>src/Tekihei2317/Core/Test</directory>
+  </testsuite>
+</phpunit>
