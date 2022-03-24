@@ -17,6 +17,14 @@ final class ExpressFare
     {
         $expressFare = $ticket->getExpressFare();
 
+        if (!$ticket->isReservedSeat) {
+            // 自由席の場合
+            $expressFare = 5490 - 530;
+        } else if (!$ticket->isHikari) {
+            // 指定席かつのぞみの場合
+            $expressFare += 530;
+        }
+
         if (!$ticket->isAdult) {
             assert($expressFare % 10 === 0);
 

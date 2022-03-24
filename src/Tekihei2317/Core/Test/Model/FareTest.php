@@ -73,6 +73,14 @@ class FareTest extends TestCase
             // 往復料金・往復割引の確認
             '大人・新大阪・往復・ひかり・指定席の場合' => [true, $shinosaka, false, true, true, 28800],
             '大人・姫路・往復・ひかり・指定席の場合' => [true, $himeji, false, true, true, 29840],
+
+            // 自由席特急料金の確認
+            '大人・新大阪・片道・ひかり・自由席の場合' => [true, $shinosaka, true, true, false, 13870],
+            '大人・新大阪・片道・のぞみ・自由席の場合' => [true, $shinosaka, true, false, false, 13870],
+
+            // 指定席のぞみ割り増しの確認
+            '大人・新大阪・片道・のぞみ・指定席の場合' => [true, $shinosaka, true, false, true, 14400 + 530],
+            '大人・東京・片道・のぞみ・指定席の場合' => [true, $himeji, true, false, true, 15930 + 530],
         ];
     }
 }
