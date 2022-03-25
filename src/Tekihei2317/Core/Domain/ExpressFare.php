@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Tekihei2317\Core\Domain;
 
+use Tekihei2317\Core\Subdomain\Model\Date;
+use Tekihei2317\Core\Subdomain\Model\DateWithoutYear;
+
 /**
  * 特急料金
  */
@@ -25,6 +28,13 @@ final class ExpressFare
             $expressFare += 530;
         }
 
+        if ($ticket->isReservedSeat) {
+            $season = $this->calculateSeason($ticket->departureDate->toDateWithoutYear());
+            if ($season === Season::Peak) {
+                $expressFare += 200;
+            }
+        }
+
         if (!$ticket->isAdult) {
             assert($expressFare % 10 === 0);
 
@@ -38,5 +48,22 @@ final class ExpressFare
         }
 
         return $expressFare;
+    }
+
+    private function calculateSeason(DateWithoutYear $date): Season
+    {
+        $peakStartDate = DateWithoutYear::createFromMonthAndDay(12, 25);
+        $yearEndDate = DateWithoutYear::createFromMonthAndDay(12, 31);
+        $yearStartDate = DateWithoutYear::createFromMonthAndDay(1, 1);
+        $peakEndDate = DateWithoutYear::createFromMonthAndDay(1, 10);
+
+        if (
+            $date->greaterThanOrEquals($peakStartDate) && $date->lessThanOrEquals($yearEndDate) ||
+            $date->greaterThanOrEquals($yearStartDate) && $date->lessThanOrEquals($peakEndDate)
+        ) {
+            return Season::Peak;
+        }
+
+        return Season::Regular;
     }
 }

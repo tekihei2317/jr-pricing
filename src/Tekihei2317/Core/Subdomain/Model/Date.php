@@ -28,9 +28,19 @@ final class Date
         return $this->chronos->greaterThan($other->chronos);
     }
 
+    public function greaterThanOrEquals(self $other): bool
+    {
+        return $this->chronos->greaterThanOrEquals($other->chronos);
+    }
+
     public function lessThan(self $other): bool
     {
         return $this->chronos->lessThan($other->chronos);
+    }
+
+    public function lessThanOrEquals(self $other): bool
+    {
+        return $this->chronos->lessThanOrEquals($other->chronos);
     }
 
     public function addDay(int $day): self
@@ -41,5 +51,10 @@ final class Date
     public function toDateString(): string
     {
         return $this->chronos->toDateString();
+    }
+
+    public function toDateWithoutYear(): DateWithoutYear
+    {
+        return DateWithoutYear::createFromMonthAndDay($this->chronos->month, $this->chronos->day);
     }
 }

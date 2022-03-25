@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tekihei2317\Core\Domain;
 
+use Tekihei2317\Core\Subdomain\Model\Date;
+
 /**
  * 乗車券
  */
@@ -14,7 +16,8 @@ final class Ticket
         public readonly Destination $destination,
         public readonly bool $isOneWay,
         public readonly bool $isHikari,
-        public readonly bool $isReservedSeat
+        public readonly bool $isReservedSeat,
+        public readonly Date $departureDate,
     ) {
     }
 
