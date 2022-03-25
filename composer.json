@@ -16,6 +16,8 @@
     "phpunit/phpunit": "^9.5"
   },
   "require": {
-    "cakephp/chronos": "^2.3"
+    "cakephp/chronos": "^2.3",
+    "slim/slim": "4.*",
+    "slim/psr7": "^1.5"
   }
 }
