@@ -5,26 +5,19 @@ declare(strict_types=1);
 namespace Tekihei2317\Core\Test\Model;
 
 use PHPUnit\Framework\TestCase;
-use Tekihei2317\Core\Domain\BaseFare;
-use Tekihei2317\Core\Domain\Destination;
-use Tekihei2317\Core\Domain\ExpressFare;
-use Tekihei2317\Core\Domain\Fare;
-use Tekihei2317\Core\Domain\Station;
 use Tekihei2317\Core\Domain\Ticket;
+use Tekihei2317\Core\Domain\Station;
+use Tekihei2317\Core\Domain\Destination;
 use Tekihei2317\Core\Subdomain\Model\Date;
-use Tekihei2317\Core\UseCases\CalculateBaseFare;
-use Tekihei2317\Core\UseCases\CalculateExpressFare;
+use Tekihei2317\Core\UseCases\CalculateFare;
 
-class FareTest extends TestCase
+class CalculateFareTest extends TestCase
 {
-    private Fare $fare;
+    private CalculateFare $sut;
 
     protected function setUp(): void
     {
-        $this->fare = new Fare(
-            baseFare: new CalculateBaseFare,
-            expressFare: new CalculateExpressFare,
-        );
+        $this->sut = new CalculateFare();
     }
 
     /**
@@ -48,7 +41,7 @@ class FareTest extends TestCase
             departureDate: $departureDate,
         );
 
-        $this->assertEquals($expected, $this->fare->calculate($ticket));
+        $this->assertEquals($expected, $this->sut->run($ticket));
     }
 
     public function dataProvider_料金が正しく計算できること()
