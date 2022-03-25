@@ -86,10 +86,18 @@ class FareTest extends TestCase
             '大人・東京・片道・のぞみ・指定席の場合' => [true, $himeji, true, false, true, Date::createFromString('2022-04-01'), 15930 + 530],
 
             // 繁忙期割増の確認
+            '大人・新大阪・片道・ひかり・指定席・繁忙期開始前の場合' => [true, $shinosaka, true, true, true, Date::createFromString('2022-12-24'), 14400],
             '大人・新大阪・片道・ひかり・指定席・繁忙期(開始日)の場合' => [true, $shinosaka, true, true, true, Date::createFromString('2022-12-25'), 14400 + 200],
+            '大人・新大阪・片道・ひかり・指定席・繁忙期(途中日)の場合' => [true, $shinosaka, true, true, true, Date::createFromString('2022-01-01'), 14400 + 200],
             '大人・新大阪・片道・ひかり・指定席・繁忙期(終了日)の場合' => [true, $shinosaka, true, true, true, Date::createFromString('2022-01-10'), 14400 + 200],
+            '大人・新大阪・片道・ひかり・指定席・繁忙期終了後の場合' => [true, $shinosaka, true, true, true, Date::createFromString('2022-01-11'), 14400],
 
             // 閑散期割引の確認
+            '大人・新大阪・片道・ひかり・指定席・閑散期開始前の場合' => [true, $shinosaka, true, true, true, Date::createFromString('2022-01-15'), 14400],
+            '大人・新大阪・片道・ひかり・指定席・閑散期(開始日)の場合' => [true, $shinosaka, true, true, true, Date::createFromString('2022-01-16'), 14400 - 200],
+            '大人・新大阪・片道・ひかり・指定席・閑散期(途中日)の場合' => [true, $shinosaka, true, true, true, Date::createFromString('2022-01-25'), 14400 - 200],
+            '大人・新大阪・片道・ひかり・指定席・閑散期(終了日)の場合' => [true, $shinosaka, true, true, true, Date::createFromString('2022-01-30'), 14400 - 200],
+            '大人・新大阪・片道・ひかり・指定席・閑散期終了後の場合' => [true, $shinosaka, true, true, true, Date::createFromString('2022-01-31'), 14400],
         ];
     }
 }

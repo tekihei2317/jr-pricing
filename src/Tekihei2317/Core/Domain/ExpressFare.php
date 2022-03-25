@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tekihei2317\Core\Domain;
 
-use Tekihei2317\Core\Subdomain\Model\Date;
 use Tekihei2317\Core\Subdomain\Model\DateWithoutYear;
 
 /**
@@ -32,6 +31,8 @@ final class ExpressFare
             $season = $this->calculateSeason($ticket->departureDate->toDateWithoutYear());
             if ($season === Season::Peak) {
                 $expressFare += 200;
+            } else if ($season === Season::OffPeak) {
+                $expressFare -= 200;
             }
         }
 
@@ -62,6 +63,13 @@ final class ExpressFare
             $date->greaterThanOrEquals($yearStartDate) && $date->lessThanOrEquals($peakEndDate)
         ) {
             return Season::Peak;
+        }
+
+        $offPeakStartDate = DateWithoutYear::createFromMonthAndDay(1, 16);
+        $offPeakEndDate = DateWithoutYear::createFromMonthAndDay(1, 30);
+
+        if ($date->greaterThanOrEquals($offPeakStartDate) && $date->lessThanOrEquals($offPeakEndDate)) {
+            return Season::OffPeak;
         }
 
         return Season::Regular;
