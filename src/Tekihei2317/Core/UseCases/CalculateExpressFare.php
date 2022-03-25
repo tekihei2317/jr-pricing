@@ -2,20 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Tekihei2317\Core\Domain;
+namespace Tekihei2317\Core\UseCases;
 
+use Tekihei2317\Core\Domain\Season;
+use Tekihei2317\Core\Domain\Ticket;
 use Tekihei2317\Core\Subdomain\Model\DateWithoutYear;
 
 /**
- * 特急料金
+ * 特急料金を計算する
  */
-final class ExpressFare
+final class CalculateExpressFare
 {
-    public function __construct()
-    {
-    }
-
-    public function calculate(Ticket $ticket): int
+    public function run(Ticket $ticket): int
     {
         $expressFare = $ticket->getExpressFare();
 

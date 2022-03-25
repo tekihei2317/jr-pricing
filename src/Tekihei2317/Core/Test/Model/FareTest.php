@@ -12,6 +12,8 @@ use Tekihei2317\Core\Domain\Fare;
 use Tekihei2317\Core\Domain\Station;
 use Tekihei2317\Core\Domain\Ticket;
 use Tekihei2317\Core\Subdomain\Model\Date;
+use Tekihei2317\Core\UseCases\CalculateBaseFare;
+use Tekihei2317\Core\UseCases\CalculateExpressFare;
 
 class FareTest extends TestCase
 {
@@ -20,8 +22,8 @@ class FareTest extends TestCase
     protected function setUp(): void
     {
         $this->fare = new Fare(
-            baseFare: new BaseFare,
-            expressFare: new ExpressFare
+            baseFare: new CalculateBaseFare,
+            expressFare: new CalculateExpressFare,
         );
     }
 
